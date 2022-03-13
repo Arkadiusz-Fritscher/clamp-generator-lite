@@ -1,6 +1,35 @@
+:root {
+  --color-primary: #6333ff;
+  --color-primary-hover: #7347ff;
+  --color-primary-focus: #4c14ff;
+
+  --color-error: #ff3364;
+  --color-success: #0eb56f;
+
+  --color-white: #ffffff;
+  --color-headline: #eef5f8;
+  --color-lighter: #778cac;
+  --color-darker: #3e4859;
+  --color-dark1: #15151b;
+  --color-dark2: #1a1a22;
+  --color-dark3: #22222c;
+  --color-dark4: #212330;
+}
+
 body {
   min-height: 100vh;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-dark1);
+  color: var(--color-headline);
+  font-size: 16px;
+}
+
+.gradient {
+  background: linear-gradient(90.6deg, #5e36f2 0%, #bf2bc3 99.79%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
