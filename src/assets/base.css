@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
 :root {
   --color-primary: #6333ff;
   --color-primary-hover: #7347ff;
@@ -14,6 +16,12 @@
   --color-dark2: #1a1a22;
   --color-dark3: #22222c;
   --color-dark4: #212330;
+
+  --text-caption: 0.875rem;
+  --text-base: clamp(0.875rem, 0.7721rem + 0.3922vw, 1.125rem);
+  --text-md: clamp(1rem, 0.8971rem + 0.3922vw, 1.25rem);
+
+  --text-preview: 1rem;
 }
 
 body {

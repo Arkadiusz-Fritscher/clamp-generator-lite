@@ -15,8 +15,39 @@ module.exports = {
       dark2: "var(--color-dark2)",
       dark3: "var(--color-dark3)",
       dark4: "var(--color-dark4)",
+      current: "currentColor",
+      transparent: "transparent",
+      inherit: "inherit",
     },
-    extend: {},
+
+    fontSize: {
+      caption: [
+        "var(--text-caption)",
+        {
+          letterSpacing: "-0.02em",
+          lineHeight: "100%",
+        },
+      ],
+      base: [
+        "var(--text-base)",
+        {
+          letterSpacing: "-0.02em",
+          lineHeight: "120%",
+        },
+      ],
+      md: [
+        "var(--text-md)",
+        {
+          letterSpacing: "-0.02em",
+          lineHeight: "140%",
+        },
+      ],
+    },
+    extend: {
+      screens: {
+        xs: "420px",
+      },
+    },
   },
   plugins: [],
 };

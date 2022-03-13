@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["plugin:vue/vue3-strongly-recommended"],
+  extends: ["plugin:vue/vue3-strongly-recommended", "prettier"],
   parserOptions: {
     ecmaVersion: 12,
     parser: "@typescript-eslint/parser",
