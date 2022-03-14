@@ -21,8 +21,9 @@ const calcClamp = computed(() => {
         const yAxisIntersection = -minViewport.input * slop + minFont.input;
 
         const clamp = `clamp(${fix(minFont.input)}rem, ${fix(yAxisIntersection)}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem)`;
+        const previewClamp = `min(max(${minFont.input}rem, 100%), ${maxFont.input}rem)`;
 
-        document.documentElement.style.setProperty('--text-preview', clamp);
+        document.documentElement.style.setProperty('--text-preview', previewClamp);
         return clamp;
     }
 
@@ -37,7 +38,7 @@ const remValues = computed(() => {
 
 <template>
     <div class="clamp wrapper__flex">
-        <div>
+        <div v-if="calcClamp">
             <div>Your clamp Function</div>
             <div
                 class="px-6 py-3 bg-dark3 rounded flex items-center justify-between gap-4 flex-col md:flex-row"
@@ -47,6 +48,9 @@ const remValues = computed(() => {
                     <BaseButton>copy</BaseButton>
                 </div>
             </div>
+        </div>
+        <div v-else class="flex px-6 py-3">
+            <span class="text-md font-medium text-success">Type your values in</span>
         </div>
     </div>
 </template>
