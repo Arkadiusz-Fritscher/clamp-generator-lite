@@ -36,11 +36,16 @@ const remValues = computed(() => {
 </script>
 
 <template>
-    <div class="clamp">
+    <div class="clamp wrapper__flex">
         <div>
-            <div>{{ calcClamp }}</div>
-            <div>
-                <BaseButton>copy</BaseButton>
+            <div>Your clamp Function</div>
+            <div
+                class="px-6 py-3 bg-dark3 rounded flex items-center justify-between gap-4 flex-col md:flex-row"
+            >
+                <div class="bg-dark2 p-4 rounded">{{ calcClamp }}</div>
+                <div class="w-max">
+                    <BaseButton>copy</BaseButton>
+                </div>
             </div>
         </div>
     </div>
@@ -48,6 +53,12 @@ const remValues = computed(() => {
 
 <style scoped>
 .clamp {
-    flex: 0 1 40%;
+    flex: 1 1 100%;
+}
+
+@media screen(sm) {
+    .clamp {
+        flex: 1 1 40%;
+    }
 }
 </style>

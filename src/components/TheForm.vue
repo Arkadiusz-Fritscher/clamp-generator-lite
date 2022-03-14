@@ -8,22 +8,22 @@ const emit = defineEmits(['submit']);
 
 const inputValues = reactive({
     minViewport: {
-        input: '',
+        input: '390',
         unit: 'px',
         error: ''
     },
     maxViewport: {
-        input: '',
+        input: '1440',
         unit: 'px',
         error: ''
     },
     minFont: {
-        input: '',
+        input: '16',
         unit: 'px',
         error: ''
     },
     maxFont: {
-        input: '',
+        input: '22',
         unit: 'px',
         error: ''
     },
@@ -77,7 +77,7 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="form">
+    <div class="form wrapper__flex">
         <form class="flex flex-wrap gap-x-4 gap-y-14" @submit.prevent="submit">
             <BaseInput
                 selection
@@ -112,7 +112,9 @@ const submit = () => {
                 v-model:input-value.trim.number="inputValues.maxFont.input"
                 v-model:selection-value.trim="inputValues.maxFont.unit"
             />
-            <BaseButton type="submit">Generate Clamp</BaseButton>
+            <div class="submit__container">
+                <BaseButton type="submit">Generate Clamp</BaseButton>
+            </div>
         </form>
     </div>
 </template>
@@ -122,17 +124,28 @@ const submit = () => {
     flex: 1 0 100%;
 }
 
+.submit__container {
+    flex: 1 1 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
 form button {
     flex: 1 1 100%;
 }
 
 @media screen(xs) {
+}
+
+@media (min-width: 680px) {
     form > * {
         flex: 1 1 0%;
     }
 }
 
-@media screen(md) {
+@media (min-width: 1370px) {
     .form {
         flex: 1 1 40%;
     }

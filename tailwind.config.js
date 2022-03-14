@@ -24,21 +24,28 @@ module.exports = {
       caption: [
         "var(--text-caption)",
         {
-          letterSpacing: "-0.02em",
-          lineHeight: "100%",
+          letterSpacing: "0em",
+          lineHeight: "110%",
         },
       ],
       base: [
         "var(--text-base)",
         {
           letterSpacing: "-0.02em",
-          lineHeight: "120%",
+          lineHeight: "130%",
         },
       ],
       md: [
         "var(--text-md)",
         {
           letterSpacing: "-0.02em",
+          lineHeight: "140%",
+        },
+      ],
+      h1: [
+        "var(--text-headline)",
+        {
+          letterSpacing: "-0.03em",
           lineHeight: "140%",
         },
       ],

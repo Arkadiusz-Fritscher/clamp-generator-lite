@@ -68,7 +68,7 @@ defineEmits(['update:inputValue', 'update:selectionValue']);
         v-if="selection"
         :name="`${id}-selection`"
         :id="`${id}-selection`"
-        class="bg-transparent h-full text-lighter outline-none"
+        class="bg-transparent h-full text-lighter outline-none hover:cursor-pointer"
         :value="selectionValue"
         @change="$emit('update:selectionValue', ($event.target as HTMLInputElement).value)"
       >
