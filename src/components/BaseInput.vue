@@ -94,4 +94,17 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; /* Remove default arrow */
+  background-image: url(@/assets/chevron_down.svg); /* Add custom arrow */
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-size: var(--text-base);
+  padding-right: var(--text-base);
+  line-height: 140%;
+  width: max-content;
+}
 </style>

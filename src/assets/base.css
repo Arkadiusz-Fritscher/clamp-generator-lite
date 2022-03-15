@@ -41,7 +41,7 @@
   --text-caption: 0.875rem;
   --text-base: clamp(0.875rem, 0.7721rem + 0.3922vw, 1.125rem);
   --text-md: clamp(1rem, 0.8971rem + 0.3922vw, 1.25rem);
-  --text-headline: clamp(1.5rem, 0.525rem + 4vw, 4.125rem);
+  --text-headline: clamp(2.25rem, 0.857rem + 5.714vw, 6rem);
 
   --text-preview: 1rem;
 }
@@ -95,7 +95,6 @@
 }
 
 body {
-  min-height: 100vh;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -108,6 +107,4 @@ body {
   background: linear-gradient(90.6deg, #5e36f2 0%, #bf2bc3 99.79%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
 }

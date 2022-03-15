@@ -72,8 +72,9 @@ const resize = () => {
 };
 
 
+
 onMounted(() => {
-  resize();
+  // resize();
 });
 </script>
 

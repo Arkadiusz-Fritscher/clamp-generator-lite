@@ -59,10 +59,10 @@ watch(themeColor, () => {
         <IconMoon v-else />
       </button>
     </div>
-    <div class="text-caption text-lighter">
+    <!-- <div class="text-caption text-lighter">
       <span>Base fontsize: &nbsp;</span>
       <span>16px</span>
-    </div>
+    </div>-->
   </nav>
 </template>
 

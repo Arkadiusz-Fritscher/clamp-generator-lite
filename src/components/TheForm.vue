@@ -67,11 +67,12 @@ watch(inputValues, (newValue, oldValue) => {
 });
 
 const submit = () => {
-    if (validateForm()) {
-        emit('submit', JSON.parse(JSON.stringify(inputValues)));
-    } else {
-        emit('submit', false);
-    }
+    emit('submit', JSON.parse(JSON.stringify(inputValues)));
+    // if (validateForm()) {
+    //     emit('submit', JSON.parse(JSON.stringify(inputValues)));
+    // } else {
+    //     emit('submit', false);
+    // }
 };
 
 </script>

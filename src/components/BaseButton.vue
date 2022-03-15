@@ -12,6 +12,15 @@
 
 <style scoped>
 button {
-  transition: background-color 0.3s ease-out;
+  transition: background-color 0.2s ease-out;
+}
+
+button:disabled {
+  background-color: var(--color-dark2);
+  color: var(--color-darker);
+}
+
+button:disabled:hover {
+  cursor: not-allowed;
 }
 </style>

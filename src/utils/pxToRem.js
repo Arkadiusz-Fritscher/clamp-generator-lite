@@ -1,6 +1,4 @@
-export default function pxToRem(entry) {
-  const baseFont = 16;
-
+export default function pxToRem(entry, baseFont = 16) {
   const remValues = JSON.parse(JSON.stringify(entry));
 
   for (const [key, value] of Object.entries(remValues)) {
