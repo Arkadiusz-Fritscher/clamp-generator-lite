@@ -1,18 +1,18 @@
 <template>
   <TheNavigation />
   <TheHeader />
-  <main class="wrapper__small flex flex-wrap gap-4 justify-between">
+  <main class="wrapper__small flex flex-wrap gap-12 justify-between">
     <TheForm @submit="onSubmit" />
     <TheClampCard :values="formInputs" />
   </main>
-  <ThePreview />
+  <!-- <ThePreview /> -->
 </template>
 
 <script setup lang="ts">
 import TheNavigation from "@/components/TheNavigation.vue";
 import TheForm from "@/components/TheForm.vue";
 import TheClampCard from "@/components/TheClampCard.vue";
-import ThePreview from "@/components/ThePreview.vue";
+// import ThePreview from "@/components/ThePreview.vue";
 import { ref } from "vue";
 import TheHeader from "@/components/TheHeader.vue";
 
@@ -41,7 +41,7 @@ const onSubmit = (values: object) => {
   display: flex;
   justify-content: center;
   margin-inline: auto;
-  max-width: 900px;
+  max-width: 600px;
 }
 
 @media screen(sm) {

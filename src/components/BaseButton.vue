@@ -4,7 +4,7 @@
 
 <template>
   <button
-    class="bg-primary rounded text-md p-4 md:p-6 font-medium hover:bg-primary-hover active:bg-primary-focus max-w-[590px]"
+    class="bg-primary rounded md:rounded-lg text-md p-4 font-medium hover:bg-primary-hover active:bg-primary-focus flex justify-center items-center dark:text-white"
   >
     <slot></slot>
   </button>

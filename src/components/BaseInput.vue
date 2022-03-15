@@ -53,7 +53,7 @@ defineEmits(['update:inputValue', 'update:selectionValue']);
   <div class="w-full">
     <label v-if="label" class="text-caption text-lighter" :for="id">{{ label }}</label>
     <div
-      class="input rounded bg-dark4 text-base px-4 py-2 flex items-center justify-between outline outline-1 focus-within:outline-primary hover:bg-darker3 hover:outline-darker hover:focus-within:outline-primary"
+      class="input rounded bg-dark2 text-base px-4 py-2 flex items-center justify-between outline outline-1 focus-within:outline-primary focus-within:bg-dark3 hover:bg-dark3 hover:outline-darker hover:focus-within:outline-primary"
       :class="error ? 'outline-error' : 'outline-dark2'"
     >
       <input
@@ -68,7 +68,7 @@ defineEmits(['update:inputValue', 'update:selectionValue']);
         v-if="selection"
         :name="`${id}-selection`"
         :id="`${id}-selection`"
-        class="bg-transparent h-full text-lighter outline-none hover:cursor-pointer"
+        class="text-caption bg-transparent h-full text-lighter outline-none hover:cursor-pointer"
         :value="selectionValue"
         @change="$emit('update:selectionValue', ($event.target as HTMLInputElement).value)"
       >

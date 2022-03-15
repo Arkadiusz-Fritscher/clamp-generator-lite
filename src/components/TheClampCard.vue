@@ -2,6 +2,7 @@
 import pxToRem from '@/utils/pxToRem.js';
 import { computed } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
+import IconCopy from './icons/IconCopy.vue';
 const props = defineProps({
     values: {
         type: [Object, Boolean],
@@ -21,9 +22,8 @@ const calcClamp = computed(() => {
         const yAxisIntersection = -minViewport.input * slop + minFont.input;
 
         const clamp = `clamp(${fix(minFont.input)}rem, ${fix(yAxisIntersection)}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem)`;
-        const previewClamp = `min(max(${minFont.input}rem, 100%), ${maxFont.input}rem)`;
 
-        document.documentElement.style.setProperty('--text-preview', previewClamp);
+        document.documentElement.style.setProperty('--text-preview', clamp);
         return clamp;
     }
 
@@ -38,14 +38,14 @@ const remValues = computed(() => {
 
 <template>
     <div class="clamp wrapper__flex">
-        <div v-if="calcClamp">
-            <div>Your clamp Function</div>
-            <div
-                class="px-6 py-3 bg-dark3 rounded flex items-center justify-between gap-4 flex-col md:flex-row"
-            >
-                <div class="bg-dark2 p-4 rounded">{{ calcClamp }}</div>
-                <div class="w-max">
-                    <BaseButton>copy</BaseButton>
+        <div v-if="calcClamp" class="w-full">
+            <div class="text-lighter text-caption pb-1">Your clamp Function</div>
+            <div class="card">
+                <div class="bg-dark3 p-4 rounded-lg min-w-fit flex-1">{{ calcClamp }}</div>
+                <div class="copy">
+                    <BaseButton class="w-full">
+                        <IconCopy />
+                    </BaseButton>
                 </div>
             </div>
         </div>
@@ -58,6 +58,20 @@ const remValues = computed(() => {
 <style scoped>
 .clamp {
     flex: 1 1 100%;
+}
+
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 2rem;
+    background-color: var(--color-dark2);
+    border-radius: 16px;
+    align-items: center;
+}
+
+.copy {
+    flex: 1 1 min-content;
 }
 
 @media screen(sm) {

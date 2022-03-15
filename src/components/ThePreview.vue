@@ -7,6 +7,9 @@ const startWidth = ref();
 const direction = ref();
 const currentWidth = ref();
 const maxWidth = ref();
+const fontSize = ref();
+const isResize = ref(false);
+const isHidden = ref(false);
 
 
 const resize = () => {
@@ -17,6 +20,7 @@ const resize = () => {
   const sizeIndicator = document.querySelector('.size');
 
   sizeIndicator.textContent = `${Math.round(resizeCenter?.getBoundingClientRect().width)}`;
+  fontSize.value = Math.round(getComputedStyle(document.querySelector('.preview')).fontSize.slice(0, -2));
 
   // Events
   handles.forEach(handle => {
@@ -48,11 +52,13 @@ const resize = () => {
       currentWidth.value = Math.round(resizeCenter?.getBoundingClientRect().width);
       container.style.maxWidth = currentWidth.value + 'px';
       sizeIndicator.textContent = `${currentWidth.value}`;
+      const fontsize = getComputedStyle(document.querySelector('.preview')).fontSize.slice(0, -2);
+      fontSize.value = Math.round(+fontsize);
     }
   });
 
   window.addEventListener('resize', (e) => {
-    console.log('resize...');
+
     document.removeEventListener('mousemove', mouseMove);
     document.removeEventListener('mouseup', mouseUp);
     resizeCenter.style.maxWidth = '100%';
@@ -60,9 +66,11 @@ const resize = () => {
     currentWidth.value = resizeCenter?.getBoundingClientRect().width;
     container.style.maxWidth = currentWidth.value + 'px';
     sizeIndicator.textContent = `${Math.round(currentWidth.value)}`;
-
+    const fontsize = getComputedStyle(document.querySelector('.preview')).fontSize.slice(0, -2);
+    fontSize.value = Math.round(+fontsize);
   });
 };
+
 
 onMounted(() => {
   resize();
@@ -71,7 +79,10 @@ onMounted(() => {
 
 <template>
   <section class="wrapper__large">
-    <div class="text-lighter text-caption">Preview</div>
+    <div class="text-lighter text-caption flex justify-between">
+      <span>{{ isResize }}</span>
+      <span>Fontsize: {{ fontSize }}px</span>
+    </div>
     <div>
       <div class="flex justify-center">
         <div id="size-container">

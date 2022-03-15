@@ -77,7 +77,7 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="form wrapper__flex mb-8">
+    <div class="form wrapper__flex">
         <form class="flex flex-wrap gap-x-4 gap-y-14" @submit.prevent="submit">
             <BaseInput
                 selection
@@ -136,9 +136,6 @@ form button {
     flex: 1 1 100%;
 }
 
-@media screen(xs) {
-}
-
 @media (min-width: 680px) {
     form > * {
         flex: 1 1 0%;
@@ -147,7 +144,7 @@ form button {
 
 @media (min-width: 1370px) {
     .form {
-        flex: 1 1 40%;
+        flex: 1 1 44%;
     }
 }
 </style>
