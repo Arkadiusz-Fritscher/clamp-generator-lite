@@ -22,7 +22,7 @@ defineProps({
 
   type: {
     type: String,
-    default: 'number'
+    default: 'text'
   },
 
   error: {
@@ -59,15 +59,16 @@ defineEmits(['update:inputValue', 'update:selectionValue']);
       <input
         :type="type"
         :placeholder="placeholder"
-        :id="id"
+        :id="`${id}-input`"
+        step=".001"
         class="bg-transparent w-full h-full outline-none placeholder:text-darker"
         :value="inputValue"
-        @input="$emit('update:inputValue', ($event.target as HTMLInputElement).value)"
+        @input="$emit('update:inputValue', `${$event.target.value ? parseFloat(($event.target as HTMLInputElement).value.replace(/,/g, '.')) : ''}`)"
       />
       <select
         v-if="selection"
-        :name="`${id}-selection`"
-        :id="`${id}-selection`"
+        :name="`${id}-unit`"
+        :id="`${id}-unit`"
         class="text-caption bg-transparent h-full text-lighter outline-none hover:cursor-pointer"
         :value="selectionValue"
         @change="$emit('update:selectionValue', ($event.target as HTMLInputElement).value)"

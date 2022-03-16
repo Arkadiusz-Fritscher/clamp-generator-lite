@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import pxToRem from '@/utils/pxToRem.js';
-import { computed, ref } from 'vue';
+import { computed, onMounted, onUpdated, ref, watch } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
 import IconCopy from './icons/IconCopy.vue';
 import IconCheck from './icons/IconCheck.vue';
@@ -13,12 +12,23 @@ const props = defineProps({
 
 const hasCopy = ref(false);
 
+onMounted(() => {
+    document.addEventListener('keydown', (e) => {
+        if (props.values) {
+            if (e.key == 'c' && (e.ctrlKey || e.metaKey)) {
+                copyClipboard();
+            }
+        }
+
+    });
+});
+
 const calcClamp = computed(() => {
     if (props.values) {
-        const { minViewport, maxViewport, minFont, maxFont } = remValues.value;
+        const { minViewport, maxViewport, minFont, maxFont } = props.values;
 
-        const fix = (num) => {
-            return num.toFixed(3).replace(/(\.0+|0+)$/, '');
+        const fix = (num: number) => {
+            return Number(num).toFixed(3).replace(/(\.0+|0+)$/, '');
         };
 
         const slop = (maxFont.input - minFont.input) / (maxViewport.input - minViewport.input);
@@ -35,11 +45,8 @@ const calcClamp = computed(() => {
 
 });
 
-const remValues = computed(() => {
-    return pxToRem(props.values) || false;
-});
 
-const copyClipboard = (e) => {
+const copyClipboard = () => {
     const clamp = calcClamp.value;
     if (clamp) {
         navigator.clipboard.writeText(clamp.string);

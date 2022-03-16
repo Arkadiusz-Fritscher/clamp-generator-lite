@@ -1,78 +1,112 @@
 <script setup lang="ts">
 import BaseInput from "@/components/BaseInput.vue";
 import BaseButton from "@/components/BaseButton.vue";
-import { reactive, watch } from "vue";
-import pxToRem from '@/utils/pxToRem.js';
+import { computed, reactive, ref, watch } from "vue";
 
 const emit = defineEmits(['submit']);
 
+const baseFont = ref(16);
+const hasError = ref(false);
+const hasInputs = ref(false);
+
+
 const inputValues = reactive({
     minViewport: {
-        input: '390',
+        id: 'minViewport',
+        input: "",
         unit: 'px',
         error: ''
     },
     maxViewport: {
-        input: '1440',
+        id: 'maxViewport',
+        input: "",
         unit: 'px',
         error: ''
     },
     minFont: {
-        input: '16',
+        id: 'minFont',
+        input: "",
         unit: 'px',
         error: ''
     },
     maxFont: {
-        input: '22',
+        id: 'maxFont',
+        input: "",
         unit: 'px',
         error: ''
-    },
+    }
 });
 
 
-const validateForm = () => {
-    let hasError = [];
 
 
-    for (const [key, value] of Object.entries(inputValues)) {
-        const isMax = key.includes('max');
-        const id = key.slice(3);
-        const min = isMax && inputValues[`min${id}`]?.input ? pxToRem(inputValues[`min${id}`]).input : '';
-        // Has Value?
-
-        if (!value.input) {
-            hasError.push(true);
-            value.error = "Must have a value";
-
-        } else {
-            value.error = '';
-
-        }
-
-        if (value.input && isMax && pxToRem(value).input <= min) {
-            hasError.push(true);
-            value.error = `Max. ${id} must be grater than Min. ${id}`;
-
-        } else if (value.input && isMax && min && pxToRem(value).input > min) {
-            value.error = '';
-        }
-
+const validateInput = (e) => {
+    const id = e.target.id?.split('-')[0];
+    const value = e.target?.value;
+    // Has Input?
+    if (!value) {
+        inputValues[id].error = 'Must have a value.';
+    } else {
+        inputValues[id].error = '';
     }
-
-    return hasError.length === 0;
 };
 
-watch(inputValues, (newValue, oldValue) => {
-    validateForm();
-});
+const checkInputs = () => {
+    const { minViewport, maxViewport, minFont, maxFont } = inputValues;
+
+    if (minViewport.input && maxViewport.input, minFont.input, maxFont.input) {
+        hasInputs.value = true;
+    } else {
+        hasInputs.value = false;
+    }
+
+};
+
+
+const inputsToRem = (entry) => {
+    const asRems = JSON.parse(JSON.stringify(entry));
+
+    for (const value of Object.values(asRems)) {
+        if (value.unit === 'px') {
+            value.input = Number(value.input) / baseFont.value;
+            value.unit = 'rem';
+        }
+    }
+
+    console.log(asRems);
+    return asRems;
+};
+
+
+
+const remValues = () => {
+    const remValues = inputsToRem(inputValues);
+    return remValues;
+};
+
+const checkErrors = () => {
+    hasError.value = false;
+
+    for (const entry of Object.values(inputValues)) {
+        if (entry.error) {
+            hasError.value = true;
+            break;
+        }
+    }
+    return hasError.value;
+};
+
 
 const submit = () => {
-    emit('submit', JSON.parse(JSON.stringify(inputValues)));
-    // if (validateForm()) {
-    //     emit('submit', JSON.parse(JSON.stringify(inputValues)));
-    // } else {
-    //     emit('submit', false);
-    // }
+    checkInputs();
+    checkErrors();
+
+    if (!hasError.value && hasInputs.value) {
+        emit('submit', remValues());
+    }
+    else {
+        emit('submit', false);
+    }
 };
 
 </script>
@@ -86,7 +120,8 @@ const submit = () => {
                 :error="inputValues.minViewport.error"
                 label="Min. Viewport width"
                 placeholder="390"
-                v-model:input-value.trim.number="inputValues.minViewport.input"
+                @change="validateInput"
+                v-model:input-value.trim="inputValues.minViewport.input"
                 v-model:selection-value.trim="inputValues.minViewport.unit"
             />
             <BaseInput
@@ -94,7 +129,8 @@ const submit = () => {
                 id="maxViewport"
                 :error="inputValues.maxViewport.error"
                 label="Max. Viewport width"
-                v-model:input-value.trim.number="inputValues.maxViewport.input"
+                @change="validateInput"
+                v-model:input-value.trim="inputValues.maxViewport.input"
                 v-model:selection-value.trim="inputValues.maxViewport.unit"
             />
             <BaseInput
@@ -102,7 +138,8 @@ const submit = () => {
                 id="minFont"
                 :error="inputValues.minFont.error"
                 label="Min. Fontsize"
-                v-model:input-value.trim.number="inputValues.minFont.input"
+                @change="validateInput"
+                v-model:input-value.trim="inputValues.minFont.input"
                 v-model:selection-value.trim="inputValues.minFont.unit"
             />
             <BaseInput
@@ -110,7 +147,8 @@ const submit = () => {
                 id="maxFont"
                 :error="inputValues.maxFont.error"
                 label="Max. Fontsize"
-                v-model:input-value.trim.number="inputValues.maxFont.input"
+                @change="validateInput"
+                v-model:input-value.trim="inputValues.maxFont.input"
                 v-model:selection-value.trim="inputValues.maxFont.unit"
             />
             <div class="submit__container">

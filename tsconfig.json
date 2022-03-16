@@ -1,8 +1,4 @@
 {
-  "lib": [
-    "es2017"
-  ],
-  "target": "es2017",
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": [
     "env.d.ts",
@@ -15,7 +11,12 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "target": "esnext",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
   },
   "references": [
     {
