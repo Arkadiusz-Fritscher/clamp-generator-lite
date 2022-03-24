@@ -1,60 +1,53 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import IconSun from './icons/IconSun.vue'
-import IconMoon from './icons/IconMoon.vue'
+import { onMounted, ref, watch } from "vue";
+import IconSun from "./icons/IconSun.vue";
+import IconMoon from "./icons/IconMoon.vue";
 
-const themeColor = ref()
+const themeColor = ref();
 
-const setThemeColor = (theme) =>
-{
-  themeColor.value = theme
-  localStorage.setItem('theme', `${theme}`)
-}
+const setThemeColor = (theme) => {
+  themeColor.value = theme;
+  localStorage.setItem("theme", `${theme}`);
+};
 
-const getThemeColor = () =>
-{
-  let theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  const storedTheme = localStorage.getItem('theme') || false
-  setThemeColor(storedTheme ? storedTheme : theme)
+const getThemeColor = () => {
+  let theme =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  const storedTheme = localStorage.getItem("theme") || false;
+  setThemeColor(storedTheme ? storedTheme : theme);
 
-  return storedTheme ? storedTheme : theme
-}
+  return storedTheme ? storedTheme : theme;
+};
 
-const setThemeClass = () =>
-{
-  const body = document.body
-  if (themeColor.value === 'dark')
-  {
-    body.classList.remove('theme-light')
-    body.classList.add('theme-dark')
-  } else
-  {
-    body.classList.remove('theme-dark')
-    body.classList.add('theme-light')
+const setThemeClass = () => {
+  const body = document.body;
+  if (themeColor.value === "dark") {
+    body.classList.remove("theme-light");
+    body.classList.add("theme-dark");
+  } else {
+    body.classList.remove("theme-dark");
+    body.classList.add("theme-light");
   }
-}
+};
 
-const toggleTheme = () =>
-{
-  if (themeColor.value === 'dark')
-  {
-    setThemeColor('light')
-  } else
-  {
-    setThemeColor('dark')
+const toggleTheme = () => {
+  if (themeColor.value === "dark") {
+    setThemeColor("light");
+  } else {
+    setThemeColor("dark");
   }
-}
+};
 
-onMounted(() =>
-{
-  getThemeColor()
-})
+onMounted(() => {
+  getThemeColor();
+});
 
-watch(themeColor, () =>
-{
-  setThemeClass()
-})
-
+watch(themeColor, () => {
+  setThemeClass();
+});
 </script>
 
 <template>
@@ -72,7 +65,4 @@ watch(themeColor, () =>
   </nav>
 </template>
 
-
-
-<style scoped>
-</style>
+<style scoped></style>

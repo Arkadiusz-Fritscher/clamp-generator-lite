@@ -1,89 +1,91 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from "vue";
 
-const isGrabbed = ref(false)
-const startX = ref()
-const startWidth = ref()
-const direction = ref()
-const currentWidth = ref()
-const maxWidth = ref()
-const fontSize = ref()
-const isResize = ref(false)
-const isHidden = ref(false)
+const isGrabbed = ref(false);
+const startX = ref();
+const startWidth = ref();
+const direction = ref();
+const currentWidth = ref();
+const maxWidth = ref();
+const fontSize = ref();
+const isResize = ref(false);
+const isHidden = ref(false);
 
-
-const resize = () =>
-{
+const resize = () => {
   // Dom Elements
-  const container = document.querySelector('#size-container')
-  const resizeCenter = document.querySelector('[data-resize="center"]')
-  const handles = document.querySelectorAll('.handle')
-  const sizeIndicator = document.querySelector('.size')
+  const container = document.querySelector("#size-container");
+  const resizeCenter = document.querySelector('[data-resize="center"]');
+  const handles = document.querySelectorAll(".handle");
+  const sizeIndicator = document.querySelector(".size");
 
-  sizeIndicator.textContent = `${Math.round(resizeCenter?.getBoundingClientRect().width)}`
-  fontSize.value = Math.round(getComputedStyle(document.querySelector('.preview')).fontSize.slice(0, -2))
+  sizeIndicator.textContent = `${Math.round(
+    resizeCenter?.getBoundingClientRect().width
+  )}`;
+  fontSize.value = Math.round(
+    getComputedStyle(document.querySelector(".preview")).fontSize.slice(0, -2)
+  );
 
   // Events
-  handles.forEach(handle =>
-  {
-    handle.addEventListener('mousedown', (e) =>
-    {
-      isGrabbed.value = true
-      startX.value = e.x
-      direction.value = e.target.dataset.handle ? e.target.dataset.handle : ''
-      startWidth.value = resizeCenter?.getBoundingClientRect().width
-      maxWidth.value = document.querySelector('#resize').offsetWidth - 24
+  handles.forEach((handle) => {
+    handle.addEventListener("mousedown", (e) => {
+      isGrabbed.value = true;
+      startX.value = e.x;
+      direction.value = e.target.dataset.handle ? e.target.dataset.handle : "";
+      startWidth.value = resizeCenter?.getBoundingClientRect().width;
+      maxWidth.value = document.querySelector("#resize").offsetWidth - 24;
 
-      mouseUp
-      mouseMove
-    })
-  })
+      mouseUp;
+      mouseMove;
+    });
+  });
 
-  const mouseUp = document.addEventListener('mouseup', (e) =>
-  {
-    isGrabbed.value = false
-  })
+  const mouseUp = document.addEventListener("mouseup", (e) => {
+    isGrabbed.value = false;
+  });
 
-  const mouseMove = document.addEventListener('mousemove', (e) =>
-  {
-    if (isGrabbed.value)
-    {
-      const movement = direction.value === 'left' ? e.x - startX.value : startX.value - e.x || 0
-      const resizeValue = Math.round(startWidth.value - movement * 2)
+  const mouseMove = document.addEventListener("mousemove", (e) => {
+    if (isGrabbed.value) {
+      const movement =
+        direction.value === "left"
+          ? e.x - startX.value
+          : startX.value - e.x || 0;
+      const resizeValue = Math.round(startWidth.value - movement * 2);
 
-      resizeCenter.style.maxWidth = resizeValue > maxWidth.value ? maxWidth.value + 'px' : resizeValue + "px"
+      resizeCenter.style.maxWidth =
+        resizeValue > maxWidth.value
+          ? maxWidth.value + "px"
+          : resizeValue + "px";
 
-
-
-      currentWidth.value = Math.round(resizeCenter?.getBoundingClientRect().width)
-      container.style.maxWidth = currentWidth.value + 'px'
-      sizeIndicator.textContent = `${currentWidth.value}`
-      const fontsize = getComputedStyle(document.querySelector('.preview')).fontSize.slice(0, -2)
-      fontSize.value = Math.round(+fontsize)
+      currentWidth.value = Math.round(
+        resizeCenter?.getBoundingClientRect().width
+      );
+      container.style.maxWidth = currentWidth.value + "px";
+      sizeIndicator.textContent = `${currentWidth.value}`;
+      const fontsize = getComputedStyle(
+        document.querySelector(".preview")
+      ).fontSize.slice(0, -2);
+      fontSize.value = Math.round(+fontsize);
     }
-  })
+  });
 
-  window.addEventListener('resize', (e) =>
-  {
+  window.addEventListener("resize", (e) => {
+    document.removeEventListener("mousemove", mouseMove);
+    document.removeEventListener("mouseup", mouseUp);
+    resizeCenter.style.maxWidth = "100%";
 
-    document.removeEventListener('mousemove', mouseMove)
-    document.removeEventListener('mouseup', mouseUp)
-    resizeCenter.style.maxWidth = '100%'
+    currentWidth.value = resizeCenter?.getBoundingClientRect().width;
+    container.style.maxWidth = currentWidth.value + "px";
+    sizeIndicator.textContent = `${Math.round(currentWidth.value)}`;
+    const fontsize = getComputedStyle(
+      document.querySelector(".preview")
+    ).fontSize.slice(0, -2);
+    fontSize.value = Math.round(+fontsize);
+  });
+};
 
-    currentWidth.value = resizeCenter?.getBoundingClientRect().width
-    container.style.maxWidth = currentWidth.value + 'px'
-    sizeIndicator.textContent = `${Math.round(currentWidth.value)}`
-    const fontsize = getComputedStyle(document.querySelector('.preview')).fontSize.slice(0, -2)
-    fontSize.value = Math.round(+fontsize)
-  })
-}
-
-
-
-onMounted(() =>
-{
+onMounted(() => {
   // resize();
-})
+});
 </script>
 
 <template>
@@ -106,16 +108,16 @@ onMounted(() =>
         <div data-resize="center" class="resize__center">
           <div data-handle="left" class="handle handle__left"></div>
           <div data-handle="right" class="handle handle__right"></div>
-          <p
-            class="preview relative"
-          >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem quam officia eligendi explicabo ratione assumenda qui! Beatae dolorum possimus maxime.</p>
+          <p class="preview relative">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem
+            quam officia eligendi explicabo ratione assumenda qui! Beatae
+            dolorum possimus maxime.
+          </p>
         </div>
       </div>
     </div>
   </section>
 </template>
-
-
 
 <style scoped>
 .preview {
