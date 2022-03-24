@@ -137,6 +137,7 @@ const onInput = (event) => {
       </select>
     </div>
     <span v-if="error" class="text-error text-caption">{{ error }}</span>
+    <span v-else class="text-caption text-transparent">.</span>
   </div>
 </template>
 

@@ -100,7 +100,7 @@ const submit = (e) => {
 
 <template>
   <div class="form wrapper__flex">
-    <form class="flex flex-wrap gap-x-4 gap-y-14" @submit.prevent="submit">
+    <form class="flex flex-wrap gap-x-4 gap-y-2" @submit.prevent="submit">
       <BaseInput
         selection
         id="minViewport"
@@ -172,6 +172,10 @@ form button {
 @media (min-width: 680px) {
   form > * {
     flex: 1 1 0%;
+  }
+
+  .submit__container {
+    padding-top: 1rem;
   }
 }
 
