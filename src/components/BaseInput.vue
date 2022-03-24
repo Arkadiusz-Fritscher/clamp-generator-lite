@@ -1,5 +1,8 @@
 <script setup lang="ts">
-defineProps({
+import { ref } from 'vue';
+
+const emit = defineEmits(['update:inputValue', 'update:selectionValue', 'onBlur', 'onInput']);
+const props = defineProps({
   id: {
     type: String,
     required: true
@@ -25,10 +28,6 @@ defineProps({
     default: 'text'
   },
 
-  error: {
-    type: String,
-    default: ''
-  },
 
   placeholder: {
     type: String,
@@ -36,17 +35,73 @@ defineProps({
   },
 
   inputValue: {
-    type: String,
-    default: ''
+    type: [Number, String],
+    required: true
   },
 
   selectionValue: {
     type: String,
     default: ''
+  },
+
+  error: {
+    type: String,
+    default: ''
   }
 });
 
-defineEmits(['update:inputValue', 'update:selectionValue']);
+
+
+const preventLetters = (event: InputEvent) => {
+
+  if (!event.ctrlKey && !event.metaKey && event.key.length === 1) {
+    if (window.getSelection().toString() === event.target.value) {
+      event.target.value = '';
+    }
+
+    // Check keys
+    if (event.key.match(/^\d|\,|\.$/) == null) {
+      event.preventDefault();
+    }
+
+    if (event.target.value.includes(',') && event.key === ',' || event.target.value.includes(',') && event.key === '.') {
+      event.preventDefault();
+    }
+
+    if (event.target.value.includes('.') && event.key === ',' || event.target.value.includes('.') && event.key === '.') {
+      event.preventDefault();
+    }
+
+    // Is float number?
+    const value = Number(event.target.value.replace(',', '.'));
+    if (value % 1 !== 0) {
+      const float = value.toString().split('.');
+      if (float[1]?.length >= 3) {
+        event.preventDefault();
+      }
+
+      if (event.key === ',' || event.key === '.') {
+        event.preventDefault();
+      }
+    }
+
+    // Cant start with , || .
+    if (!value && event.key.match(/^\,|\.$/)) {
+      event.preventDefault();
+    }
+
+  }
+};
+
+
+
+const onInput = (event) => {
+  emit('onInput', event);
+  emit('update:inputValue', event.target.value);
+};
+
+
+
 </script>
 
 <template>
@@ -60,10 +115,12 @@ defineEmits(['update:inputValue', 'update:selectionValue']);
         :type="type"
         :placeholder="placeholder"
         :id="`${id}-input`"
-        step=".001"
+        inputmode="numeric"
         class="bg-transparent w-full h-full outline-none placeholder:text-darker"
+        @keydown="preventLetters"
+        @input="onInput"
+        @blur="$emit('onBlur', $event)"
         :value="inputValue"
-        @input="$emit('update:inputValue', `${$event.target.value ? parseFloat(($event.target as HTMLInputElement).value.replace(/,/g, '.')) : ''}`)"
       />
       <select
         v-if="selection"
