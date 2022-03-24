@@ -1,13 +1,13 @@
-<script setup lang="ts">
-import BaseInput from "@/components/BaseInput.vue";
-import BaseButton from "@/components/BaseButton.vue";
-import { computed, reactive, ref, watch } from "vue";
+<script setup>
+import BaseInput from "@/components/BaseInput.vue"
+import BaseButton from "@/components/BaseButton.vue"
+import { computed, reactive, ref } from "vue"
 
-const emit = defineEmits(['submit']);
+const emit = defineEmits(['submit'])
 
-const baseFont = ref(16);
-const hasError = ref(false);
-const hasInputs = ref(false);
+const baseFont = ref(16)
+const hasError = ref(false)
+const hasInputs = ref(false)
 
 const inputValues = reactive({
   minViewport: {
@@ -34,80 +34,98 @@ const inputValues = reactive({
     unit: 'px',
     error: ''
   }
-});
+})
 
 
-const inputsToRem = (entry = inputValues) => {
-  const asRems = JSON.parse(JSON.stringify(entry));
+const inputsToRem = (entry = inputValues) =>
+{
+  const asRems = JSON.parse(JSON.stringify(entry))
 
-  for (const value of Object.values(asRems)) {
-    if (value.unit === 'px') {
-      value.input = Number(value.input) / baseFont.value;
-      value.unit = 'rem';
+  for (const value of Object.values(asRems))
+  {
+    if (value.unit === 'px')
+    {
+      value.input = Number(value.input) / baseFont.value
+      value.unit = 'rem'
     }
   }
-  return asRems;
-};
+  return asRems
+}
 
 
 
-const remValues = () => {
-  const remValues = inputsToRem(inputValues);
-  return remValues;
-};
+const remValues = () =>
+{
+  const remValues = inputsToRem(inputValues)
+  return remValues
+}
 
 
-const checkErrors = () => {
-  for (const value of Object.values(inputValues)) {
+const checkErrors = () =>
+{
+  for (const value of Object.values(inputValues))
+  {
 
-    if (value.input === '') {
-      hasInputs.value = false;
-      value.error = 'Must have a value.';
-      break;
-    } else {
-      hasInputs.value = true;
+    if (value.input === '')
+    {
+      hasInputs.value = false
+      value.error = 'Must have a value.'
+      break
+    } else
+    {
+      hasInputs.value = true
     }
 
-    if (value.error !== '') {
-      hasError.value = true;
-      break;
-    } else {
-      hasError.value = false;
+    if (value.error !== '')
+    {
+      hasError.value = true
+      break
+    } else
+    {
+      hasError.value = false
     }
 
 
   }
-};
+}
 
-const onBlur = (event) => {
+const onBlur = (event) =>
+{
 
-  const id = event.target?.id.split('-')[0];
+  const id = event.target?.id.split('-')[0]
 
-  if (!event.target.value) {
-    inputValues[id].error = 'Must have a value.';
-  } else if (isNaN(event.target.value)) {
-    inputValues[id].error = 'Must be a Number';
-  } else if (event.target.value.length > 9) {
-    inputValues[id].error = 'Number is to long';
+  if (!event.target.value)
+  {
+    inputValues[id].error = 'Must have a value.'
+  } else if (isNaN(event.target.value))
+  {
+    inputValues[id].error = 'Must be a Number'
+  } else if (event.target.value.length > 9)
+  {
+    inputValues[id].error = 'Number is to long'
   }
-  else {
-    inputValues[id].error = '';
+  else
+  {
+    inputValues[id].error = ''
   }
-};
+}
 
 
-const submit = (e) => {
+const submit = (e) =>
+{
 
-  checkErrors();
-  if (!hasError.value && hasInputs.value) {
-    emit('submit', remValues());
+  checkErrors()
+  if (!hasError.value && hasInputs.value)
+  {
+    emit('submit', remValues())
     // console.log('has no errors', hasInputs.value);
   }
-  else {
-    emit('submit', false);
+  else
+  {
+    emit('submit', false)
     // console.log('has errors', hasInputs.value);
   }
-};
+}
 
 </script>
 

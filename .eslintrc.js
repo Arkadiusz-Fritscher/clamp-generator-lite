@@ -6,10 +6,9 @@ module.exports = {
   extends: ["plugin:vue/vue3-strongly-recommended", "prettier"],
   parserOptions: {
     ecmaVersion: 12,
-    parser: "@typescript-eslint/parser",
     sourceType: "module",
   },
-  plugins: ["vue", "@typescript-eslint"],
+  plugins: ["vue"],
   rules: {
     quotes: "off",
     semi: ["error", "always"],

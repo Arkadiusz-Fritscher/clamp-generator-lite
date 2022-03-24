@@ -9,20 +9,21 @@
   <TheFooter />
 </template>
 
-<script setup lang="ts">
-import { ref } from "vue";
-import TheNavigation from "@/components/TheNavigation.vue";
-import TheForm from "@/components/TheForm.vue";
-import TheClampCard from "@/components/TheClampCard.vue";
+<script setup>
+import { ref } from "vue"
+import TheNavigation from "@/components/TheNavigation.vue"
+import TheForm from "@/components/TheForm.vue"
+import TheClampCard from "@/components/TheClampCard.vue"
 // import ThePreview from "@/components/ThePreview.vue";
-import TheHeader from "@/components/TheHeader.vue";
-import TheFooter from "@/components/TheFooter.vue";
+import TheHeader from "@/components/TheHeader.vue"
+import TheFooter from "@/components/TheFooter.vue"
 
-const formInputs = ref();
+const formInputs = ref()
 
-const onSubmit = (values: object) => {
-  formInputs.value = values;
-};
+const onSubmit = (values) =>
+{
+  formInputs.value = values
+}
 
 </script>
 

@@ -1,62 +1,72 @@
-<script setup lang="ts">
-import { computed, onMounted, onUpdated, ref, watch } from 'vue';
-import BaseButton from '@/components/BaseButton.vue';
-import IconCopy from './icons/IconCopy.vue';
-import IconCheck from './icons/IconCheck.vue';
+<script setup>
+import { computed, onMounted, onUpdated, ref, watch } from 'vue'
+import BaseButton from '@/components/BaseButton.vue'
+import IconCopy from './icons/IconCopy.vue'
+import IconCheck from './icons/IconCheck.vue'
 const props = defineProps({
     values: {
         type: [Object, Boolean],
         default: false
     }
-});
+})
 
-const hasCopy = ref(false);
+const hasCopy = ref(false)
 
-onMounted(() => {
-    document.addEventListener('keydown', (e) => {
-        if (props.values) {
-            if (e.key == 'c' && (e.ctrlKey || e.metaKey)) {
-                copyClipboard();
+onMounted(() =>
+{
+    document.addEventListener('keydown', (e) =>
+    {
+        if (props.values)
+        {
+            if (e.key == 'c' && (e.ctrlKey || e.metaKey))
+            {
+                copyClipboard()
             }
         }
 
-    });
-});
+    })
+})
 
-const calcClamp = computed(() => {
-    if (props.values) {
-        const { minViewport, maxViewport, minFont, maxFont } = props.values;
+const calcClamp = computed(() =>
+{
+    if (props.values)
+    {
+        const { minViewport, maxViewport, minFont, maxFont } = props.values
 
-        const fix = (num: number) => {
-            return Number(num).toFixed(3).replace(/(\.0+|0+)$/, '');
-        };
+        const fix = (num) =>
+        {
+            return Number(num).toFixed(3).replace(/(\.0+|0+)$/, '')
+        }
 
-        const slop = (maxFont.input - minFont.input) / (maxViewport.input - minViewport.input);
-        const yAxisIntersection = -minViewport.input * slop + minFont.input;
+        const slop = (maxFont.input - minFont.input) / (maxViewport.input - minViewport.input)
+        const yAxisIntersection = -minViewport.input * slop + minFont.input
 
-        const clamp = `${fix(minFont.input)}rem, ${fix(yAxisIntersection)}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem`;
-        const clampString = `clamp(${fix(minFont.input)}rem, ${fix(yAxisIntersection)}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem)`;
+        const clamp = `${fix(minFont.input)}rem, ${fix(yAxisIntersection)}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem`
+        const clampString = `clamp(${fix(minFont.input)}rem, ${fix(yAxisIntersection)}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem)`
 
-        document.documentElement.style.setProperty('--text-preview', clamp);
-        return { string: clampString, clamp };
+        document.documentElement.style.setProperty('--text-preview', clamp)
+        return { string: clampString, clamp }
     }
 
-    return false;
+    return false
 
-});
+})
 
 
-const copyClipboard = () => {
-    const clamp = calcClamp.value;
-    if (clamp) {
-        navigator.clipboard.writeText(clamp.string);
-        setTimeout(() => {
-            hasCopy.value = false;
-        }, 1500);
+const copyClipboard = () =>
+{
+    const clamp = calcClamp.value
+    if (clamp)
+    {
+        navigator.clipboard.writeText(clamp.string)
+        setTimeout(() =>
+        {
+            hasCopy.value = false
+        }, 1500)
 
-        hasCopy.value = true;
+        hasCopy.value = true
     }
-};
+}
 
 </script>
 

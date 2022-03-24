@@ -1,7 +1,5 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const emit = defineEmits(['update:inputValue', 'update:selectionValue', 'onBlur', 'onInput']);
+<script setup>
+const emit = defineEmits(['update:inputValue', 'update:selectionValue', 'onBlur', 'onInput'])
 const props = defineProps({
   id: {
     type: String,
@@ -48,57 +46,68 @@ const props = defineProps({
     type: String,
     default: ''
   }
-});
+})
 
 
 
-const preventLetters = (event: InputEvent) => {
+const preventLetters = (event) =>
+{
 
-  if (!event.ctrlKey && !event.metaKey && event.key.length === 1) {
-    if (window.getSelection().toString() === event.target.value) {
-      event.target.value = '';
+  if (!event.ctrlKey && !event.metaKey && event.key.length === 1)
+  {
+    if (window.getSelection().toString() === event.target.value)
+    {
+      event.target.value = ''
     }
 
     // Check keys
-    if (event.key.match(/^\d|\,|\.$/) == null) {
-      event.preventDefault();
+    if (event.key.match(/^\d|\,|\.$/) == null)
+    {
+      event.preventDefault()
     }
 
-    if (event.target.value.includes(',') && event.key === ',' || event.target.value.includes(',') && event.key === '.') {
-      event.preventDefault();
+    if (event.target.value.includes(',') && event.key === ',' || event.target.value.includes(',') && event.key === '.')
+    {
+      event.preventDefault()
     }
 
-    if (event.target.value.includes('.') && event.key === ',' || event.target.value.includes('.') && event.key === '.') {
-      event.preventDefault();
+    if (event.target.value.includes('.') && event.key === ',' || event.target.value.includes('.') && event.key === '.')
+    {
+      event.preventDefault()
     }
 
     // Is float number?
-    const value = Number(event.target.value.replace(',', '.'));
-    if (value % 1 !== 0) {
-      const float = value.toString().split('.');
-      if (float[1]?.length >= 3) {
-        event.preventDefault();
+    const value = Number(event.target.value.replace(',', '.'))
+    if (value % 1 !== 0)
+    {
+      const float = value.toString().split('.')
+      if (float[1]?.length >= 3)
+      {
+        event.preventDefault()
       }
 
-      if (event.key === ',' || event.key === '.') {
-        event.preventDefault();
+      if (event.key === ',' || event.key === '.')
+      {
+        event.preventDefault()
       }
     }
 
     // Cant start with , || .
-    if (!value && event.key.match(/^\,|\.$/)) {
-      event.preventDefault();
+    if (!value && event.key.match(/^\,|\.$/))
+    {
+      event.preventDefault()
     }
 
   }
-};
+}
 
 
 
-const onInput = (event) => {
-  emit('onInput', event);
-  emit('update:inputValue', event.target.value);
-};
+const onInput = (event) =>
+{
+  emit('onInput', event)
+  emit('update:inputValue', event.target.value)
+}
 
 
 
@@ -128,9 +137,9 @@ const onInput = (event) => {
         :id="`${id}-unit`"
         class="text-caption bg-transparent h-full text-lighter outline-none hover:cursor-pointer"
         :value="selectionValue"
-        @change="$emit('update:selectionValue', ($event.target as HTMLInputElement).value)"
+        @change="$emit('update:selectionValue', $event.target.value)"
       >
-        <option v-for="option in (options as string[])" :key="option" :value="option">{{ option }}</option>
+        <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
       </select>
     </div>
     <span v-if="error" class="text-error text-caption">{{ error }}</span>
