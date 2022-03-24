@@ -1,29 +1,28 @@
 <script setup>
-import { computed, onMounted, onUpdated, ref, watch } from 'vue'
-import BaseButton from '@/components/BaseButton.vue'
-import IconCopy from './icons/IconCopy.vue'
-import IconCheck from './icons/IconCheck.vue'
+import { computed, onMounted, onUpdated, ref, watch } from "vue"
+import BaseButton from "@/components/BaseButton.vue"
+import IconCopy from "./icons/IconCopy.vue"
+import IconCheck from "./icons/IconCheck.vue"
 const props = defineProps({
     values: {
         type: [Object, Boolean],
-        default: false
-    }
+        default: false,
+    },
 })
 
 const hasCopy = ref(false)
 
 onMounted(() =>
 {
-    document.addEventListener('keydown', (e) =>
+    document.addEventListener("keydown", (e) =>
     {
         if (props.values)
         {
-            if (e.key == 'c' && (e.ctrlKey || e.metaKey))
+            if (e.key == "c" && (e.ctrlKey || e.metaKey))
             {
                 copyClipboard()
             }
         }
-
     })
 })
 
@@ -35,23 +34,28 @@ const calcClamp = computed(() =>
 
         const fix = (num) =>
         {
-            return Number(num).toFixed(3).replace(/(\.0+|0+)$/, '')
+            return Number(num)
+                .toFixed(3)
+                .replace(/(\.0+|0+)$/, "")
         }
 
-        const slop = (maxFont.input - minFont.input) / (maxViewport.input - minViewport.input)
+        const slop =
+            (maxFont.input - minFont.input) / (maxViewport.input - minViewport.input)
         const yAxisIntersection = -minViewport.input * slop + minFont.input
 
-        const clamp = `${fix(minFont.input)}rem, ${fix(yAxisIntersection)}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem`
-        const clampString = `clamp(${fix(minFont.input)}rem, ${fix(yAxisIntersection)}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem)`
+        const clamp = `${fix(minFont.input)}rem, ${fix(
+            yAxisIntersection
+        )}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem`
+        const clampString = `clamp(${fix(minFont.input)}rem, ${fix(
+            yAxisIntersection
+        )}rem + ${fix(slop * 100)}vw, ${fix(maxFont.input)}rem)`
 
-        document.documentElement.style.setProperty('--text-preview', clamp)
+        document.documentElement.style.setProperty("--text-preview", clamp)
         return { string: clampString, clamp }
     }
 
     return false
-
 })
-
 
 const copyClipboard = () =>
 {
@@ -67,7 +71,6 @@ const copyClipboard = () =>
         hasCopy.value = true
     }
 }
-
 </script>
 
 <template>
@@ -80,10 +83,10 @@ const copyClipboard = () =>
                     :class="{ 'hover:border-transparent': !calcClamp }"
                 >
                     <template v-if="calcClamp">
-                        <span style="color: #BF2BC3">clamp</span>
-                        <span style="color: #2B95C3; margin-right: 0.3ch">(</span>
+                        <span style="color: #bf2bc3">clamp</span>
+                        <span style="color: #2b95c3; margin-right: 0.3ch">(</span>
                         <span>{{ calcClamp.clamp }}</span>
-                        <span style="color: #2B95C3; margin-left: 0.3ch">)</span>
+                        <span style="color: #2b95c3; margin-left: 0.3ch">)</span>
                     </template>
                     <template v-else>
                         <span class="text-transparent">-</span>
